@@ -1,0 +1,7 @@
+.nav>a {
+    display: block;
+}
+
+a.active>div {
+    background-color: var(--chakra-colors-teal-500);
+}
