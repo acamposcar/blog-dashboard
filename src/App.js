@@ -27,8 +27,8 @@ const App = () => {
     <ChakraProvider theme={theme}>
       {!authCtx.isAdmin &&
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='*' element={<Navigate to='/login' />} />
+          <Route path='/dashboard/login' element={<Login />} />
+          <Route path='*' element={<Navigate to='/dashboard/login' />} />
         </Routes>}
 
       {authCtx.isAdmin &&

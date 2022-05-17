@@ -48,7 +48,7 @@ const PostForm = (props) => {
         Authorization: `Bearer ${authCtx.token}`
       }
     }, () => {
-      navigate('/', { replace: false })
+      navigate('/dashboard', { replace: false })
     })
   }
   const handleChange = (e) => {

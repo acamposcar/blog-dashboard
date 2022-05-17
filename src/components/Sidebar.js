@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import classes from './Sidebar.modules.css'
-import { AddIcon, EditIcon, CloseIcon } from '@chakra-ui/icons'
+import { AddIcon, EditIcon, CloseIcon, ViewIcon } from '@chakra-ui/icons'
 import { ColorModeSwitcher } from '../ColorModeSwitcher'
 import { MdDashboard } from 'react-icons/md'
 import AuthContext from '../store/auth-context'
@@ -21,13 +21,13 @@ const Sidebar = () => {
 
       <Box padding={5} marginTop={2} marginBottom={5} fontSize='4em' textAlign='center'><Icon as={MdDashboard} /></Box>
       <nav className={classes.nav}>
-        <NavLink to='/'>
+        <NavLink to='/dashboard/'>
           <SidebarItem page='Posts'>
             <EditIcon />
           </SidebarItem>
         </NavLink>
 
-        <NavLink to='/create'>
+        <NavLink to='/dashboard/create'>
           <SidebarItem page='Create post'>
             <AddIcon />
           </SidebarItem>
@@ -35,7 +35,13 @@ const Sidebar = () => {
 
         <Divider marginY={7} />
 
-        <NavLink to='/logout' onClick={logoutHandler}>
+        <a href='/'>
+          <SidebarItem page='View blog'>
+            <ViewIcon />
+          </SidebarItem>
+        </a>
+
+        <NavLink to='/dashboard/logout' onClick={logoutHandler}>
           <SidebarItem page='Logout'>
             <CloseIcon />
           </SidebarItem>

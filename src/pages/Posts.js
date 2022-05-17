@@ -95,7 +95,7 @@ const Posts = () => {
                   <Td>{post.author}</Td>
                   <Td>{format(post.date, 'PPP')}</Td>
                   <Td>
-                    <Link to={`/posts/${post.id}`}>
+                    <Link to={`/dashboard/posts/${post.id}`}>
                       <IconButton
                         aria-label='Edit post'
                         colorScheme='teal'

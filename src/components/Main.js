@@ -14,10 +14,10 @@ const Main = () => {
     <GridItem>
       <Container maxW='5xl' marginTop={6} marginBottom={10}>
         <Routes>
-          <Route path='/' element={<Posts />} />
-          <Route path='create' element={<NewPost />} />
-          <Route path='posts/:postid' element={<EditPost />} />
-          <Route path='/login' element={<Navigate to='/' />} />
+          <Route path='/dashboard/' element={<Posts />} />
+          <Route path='/dashboard/create' element={<NewPost />} />
+          <Route path='/dashboard/posts/:postid' element={<EditPost />} />
+          <Route path='/dashboard/login' element={<Navigate to='/dashboard' />} />
         </Routes>
       </Container>
     </GridItem>
