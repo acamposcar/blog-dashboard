@@ -1,40 +1,43 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   ChakraProvider,
   Box,
-  Grid,
-  theme,
-  GridItem,
-  Container
+  Grid
 } from '@chakra-ui/react'
 import {
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom'
-import Posts from './pages/Posts'
 import Sidebar from './components/Sidebar'
-import NewPost from './pages/NewPost'
-import EditPost from './pages/EditPost'
+import Login from './pages/Login'
+import AuthContext from './store/auth-context'
+import theme from './theme/theme'
+import Main from './components/Main'
+
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 
 const App = () => {
+  const authCtx = useContext(AuthContext)
+
   return (
     <ChakraProvider theme={theme}>
-      <Box fontSize='md'>
-        <Grid templateColumns='200px 1fr' minH='100vh'>
-          <GridItem textAlign='left' backgroundColor='teal.700' color='white' boxShadow='inner'>
+      {!authCtx.isAdmin &&
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element={<Navigate to='/login' />} />
+        </Routes>}
+
+      {authCtx.isAdmin &&
+        <Box fontSize='md'>
+          <Grid templateColumns='200px 1fr' minH='100vh'>
             <Sidebar />
-          </GridItem>
-          <GridItem>
-            <Container maxW='5xl' marginTop={6} marginBottom={10}>
-              <Routes>
-                <Route path='/' element={<Posts />} />
-                <Route path='create' element={<NewPost />} />
-                <Route path='posts/:postid' element={<EditPost />} />
-              </Routes>
-            </Container>
-          </GridItem>
-        </Grid>
-      </Box>
+            <Main />
+          </Grid>
+        </Box>}
     </ChakraProvider>
   )
 }

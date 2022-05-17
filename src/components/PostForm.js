@@ -9,16 +9,13 @@ import {
   VStack,
   Heading,
   Image,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   HStack
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import useFetch from '../hooks/useFetch'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../store/auth-context'
+import AlertError from './AlertError'
 const PostForm = (props) => {
   const authCtx = useContext(AuthContext)
   const isEdit = !!props.id
@@ -68,15 +65,10 @@ const PostForm = (props) => {
   }
   return (
     <form onSubmit={handleSubmit}>
-      {error &&
-        <Alert status='error' variant='left-accent'>
-          <AlertIcon />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>}
-      <Heading as='h1' marginBottom={6}>
+      <Heading size='xl' fontWeight='400' as='h1' marginY={10}>
         {props.heading}
       </Heading>
+      {error && <AlertError error={error} />}
       <VStack gap={5}>
         <FormControl isRequired>
           <FormLabel htmlFor='title'>Title</FormLabel>
@@ -134,7 +126,7 @@ const PostForm = (props) => {
               />}
           </HStack>
         </FormControl>
-        <FormControl isRequired>
+        <FormControl>
           <HStack>
             <FormLabel htmlFor='published' mb='0'>
               Published?

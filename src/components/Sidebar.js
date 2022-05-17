@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import SidebarItem from './UI/SidebarItem'
-import { Box, Divider, Icon } from '@chakra-ui/react'
+import {
+  Box, Divider, Icon, GridItem, useColorModeValue
+} from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 import classes from './Sidebar.modules.css'
 import { AddIcon, EditIcon, CloseIcon } from '@chakra-ui/icons'
 import { ColorModeSwitcher } from '../ColorModeSwitcher'
 import { MdDashboard } from 'react-icons/md'
-
+import AuthContext from '../store/auth-context'
 const Sidebar = () => {
+  const authCtx = useContext(AuthContext)
+  const sidebarBg = useColorModeValue('teal.700', 'teal.900')
+
+  const logoutHandler = () => {
+    authCtx.logout()
+  }
   return (
-    <>
+    <GridItem textAlign='left' bg={sidebarBg} color='white' boxShadow='inner'>
+
       <Box padding={5} marginTop={2} marginBottom={5} fontSize='4em' textAlign='center'><Icon as={MdDashboard} /></Box>
       <nav className={classes.nav}>
         <NavLink to='/'>
@@ -26,7 +35,7 @@ const Sidebar = () => {
 
         <Divider marginY={7} />
 
-        <NavLink to='/logout'>
+        <NavLink to='/logout' onClick={logoutHandler}>
           <SidebarItem page='Logout'>
             <CloseIcon />
           </SidebarItem>
@@ -37,7 +46,7 @@ const Sidebar = () => {
           <ColorModeSwitcher />
         </Box>
       </nav>
-    </>
+    </GridItem>
   )
 }
 

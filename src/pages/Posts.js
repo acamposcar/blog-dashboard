@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
-  Alert, AlertIcon, AlertTitle, AlertDescription, Spinner, IconButton, Table,
+  Alert, AlertIcon, AlertTitle, Spinner, IconButton, Table,
   Thead,
   Tbody,
   Tr,
@@ -13,11 +13,13 @@ import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import useFetch from '../hooks/useFetch'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-
+import AuthContext from '../store/auth-context'
+import AlertError from '../components/AlertError'
 const Posts = () => {
   const [posts, setPosts] = useState([])
   const { loading: loadingPosts, sendRequest: getRequest, error: errorPosts } = useFetch()
   const { loading: loadingDelete, sendRequest: deleteRequest, error: errorDelete } = useFetch()
+  const authCtx = useContext(AuthContext)
 
   useEffect(() => {
     const transformPosts = (postObj) => {
@@ -45,7 +47,7 @@ const Posts = () => {
       url: `/api/v1/posts/${id}/`,
       method: 'DELETE',
       headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjdlMzQ1NDI2ODJmMmI2ZjNhZmNjZjQiLCJ1c2VybmFtZSI6ImFjYW1wb3MiLCJpYXQiOjE2NTI3MDQ1MDgsImV4cCI6MTY1Mjg3NzMwOH0._y9j1UKpI9-pw3HZweMZLm7X5698UX-wqQItKg4TJUo'
+        Authorization: `Bearer ${authCtx.token}`
       }
     }, () => {
       setPosts(prevPosts => prevPosts.filter(post => post.id !== id))
@@ -53,13 +55,9 @@ const Posts = () => {
   }
   if (loadingPosts) return <Spinner size='xl' />
 
-  if (errorPosts || errorDelete) {
+  if (errorPosts) {
     return (
-      <Alert marginY={6} status='error' variant='left-accent'>
-        <AlertIcon />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{errorPosts || errorDelete}</AlertDescription>
-      </Alert>
+      <AlertError error={errorPosts} />
     )
   }
 
@@ -74,8 +72,9 @@ const Posts = () => {
 
   return (
     <>
-      <Heading marginY={10}>Posts</Heading>
+      <Heading size='xl' fontWeight='400' as='h1' marginY={10}>Posts</Heading>
       {loadingDelete && <Spinner />}
+      {errorDelete && <AlertError error={errorDelete} />}
 
       <TableContainer>
         <Table variant='simple'>

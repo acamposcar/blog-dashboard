@@ -6,6 +6,7 @@ const AuthContext = React.createContext({
   token: '',
   user: {},
   isLoggedIn: false,
+  isAdmin: false,
   login: (token, expirationTime, user) => { },
   logout: () => { },
   changeAvatar: (avatar) => { }
@@ -22,10 +23,15 @@ const calculateRemainingTime = (expirationTime) => {
 }
 
 const retrieveStoredToken = () => {
+  console.log('retreive')
   const storedToken = localStorage.getItem('token')
   const storedExpirationDate = localStorage.getItem('expirationTime')
-  const storedUser = JSON.parse(localStorage.getItem('user'))
-
+  let storedUser
+  try {
+    storedUser = JSON.parse(localStorage.getItem('user'))
+  } catch (err) {
+    storedUser = null
+  }
   const remainingTime = calculateRemainingTime(storedExpirationDate)
 
   if (remainingTime <= 60000) {
@@ -57,6 +63,7 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(initialUser)
 
   const userIsLoggedIn = !!token && !!user
+  const userIsAdmin = user?.admin === true
 
   const logoutHandler = useCallback(() => {
     setToken(null)
@@ -95,15 +102,16 @@ export const AuthContextProvider = (props) => {
     if (storedData) {
       logoutTimer = setTimeout(logoutHandler, storedData.duration)
     }
-    if (!userIsLoggedIn) {
+    if (!userIsAdmin) {
       logoutHandler()
     }
-  }, [storedData, logoutHandler, userIsLoggedIn])
+  }, [storedData, logoutHandler, userIsAdmin])
 
   const contextValue = {
     token,
     user,
     isLoggedIn: userIsLoggedIn,
+    isAdmin: userIsAdmin,
     login: loginHandler,
     logout: logoutHandler,
     changeAvatar: changeAvatarHandler
