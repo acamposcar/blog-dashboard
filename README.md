@@ -13,6 +13,8 @@ Demo credentials:
 
 ## Screenshots - Dashboard (administrators only)
 
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/9263545/168870368-fdecfa6c-f856-418a-91e9-1ba97779762b.gif)
+
 ### Posts page
 ![posts](https://user-images.githubusercontent.com/9263545/168836730-fc7c6287-66a2-44e8-b09a-69bec7bfcae2.png)
 
@@ -26,6 +28,8 @@ Demo credentials:
 ![login](https://user-images.githubusercontent.com/9263545/168836746-66838ffa-9144-4cf6-98e4-328eef6dcd17.png)
 
 ## Screenshots - Blog View (public)
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/9263545/168870352-f3accfa1-1cf7-489f-b1de-a176569d5c2d.gif)
 
 ### Home page
 ![index](https://user-images.githubusercontent.com/9263545/168496688-d9532ed0-e647-42dd-a5ad-87ab07b7f5f6.png)
